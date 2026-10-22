@@ -2,14 +2,19 @@ from django.db import models
 from categories.models import Category
 
 class Product(models.Model):
-    name = models.CharField('nome', max_length=100)
-    description = models.TextField('descrição', blank=True)
-    fabrication_date = models.DateField('data de fabricação')
-    is_active = models.BooleanField('ativo', default=True)
-    price = models.DecimalField('preço', max_digits=10, decimal_places=2)
-    photo = models.ImageField('foto', upload_to='products/photos/', blank=True)
-    doc = models.FileField('documento', upload_to='products/docs/', blank=True)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name='categoria')
+    name = models.CharField('Nome', max_length=50)
+    description = models.TextField('Descricao', max_length=200)
+    fabrication_date = models.DateField('Data Fabricacao', auto_now=False, auto_now_add=False) 
+    is_active = models.BooleanField('Ativo', default=False)
+    price = models.DecimalField('Preço', max_digits=10, decimal_places=2, default=0)
+    photo = models.ImageField('Foto', upload_to='photos')
+    doc = models.FileField('Documentos', upload_to='docs')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    
+    class Meta:
+        verbose_name = 'Produto'
+        verbose_name_plural = 'Produtos'
+        ordering =['id']
 
     def __str__(self):
-        return self.name
+        return f'{self.name}'
