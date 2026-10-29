@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CategoryForm
 from .models import Category
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+
+@login_required(login_url='/contas/login/')
 def add_category(request):
     template_name = 'categories/add_category.html'
     context = {}
@@ -17,6 +20,7 @@ def add_category(request):
     context['form'] = form
     return render(request, template_name, context)
 
+@login_required(login_url='/contas/login/')
 def list_categories(request):
     template_name = 'categories/list_categories.html'
     categories = Category.objects.filter()
@@ -25,6 +29,7 @@ def list_categories(request):
     }
     return render(request, template_name, context)
 
+@login_required(login_url='/contas/login/')
 def edit_category(request, id_category):
     template_name = 'categories/add_category.html'
     context ={}
@@ -38,6 +43,7 @@ def edit_category(request, id_category):
     context['form'] = form
     return render(request, template_name, context)
 
+@login_required(login_url='/contas/login/')
 def delete_category(request, id_category):
     category = Category.objects.get(id=id_category)
     category.delete()
